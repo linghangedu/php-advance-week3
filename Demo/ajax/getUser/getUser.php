@@ -20,7 +20,7 @@
 <?php
 $q = intval($_GET['q']);
 
-$con = mysqli_connect('localhost','root','tingting', 'test');
+$con = mysqli_connect('localhost','root','root', 'test');
 
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));

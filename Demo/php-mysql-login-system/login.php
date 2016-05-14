@@ -1,7 +1,8 @@
-<?php 
+<?php
+	session_start();
+
 	require_once( "functions.php" );
 	require_once( "DBHelper.php" );
-	session_start();
 	if (logged_in() == true) {
 		redirect_to("profile.php");
 	}
@@ -27,9 +28,9 @@
 if (isset($_POST['submit'])) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
-	
+
 	// processing remember me option and setting cookie with long expiry date
-	if (isset($_POST['remember'])) {	
+	if (isset($_POST['remember'])) {
 		session_set_cookie_params('604800'); //one week (value in seconds)
 		session_regenerate_id(true);
 	}
@@ -39,7 +40,7 @@ if (isset($_POST['submit'])) {
     $sql = "SELECT * from Users2 WHERE username LIKE '{$username}' AND password LIKE '{$password}' LIMIT 1";
     $res = $db->execute_sql( $sql );
 
-	
+
 	if (count($res) != 1) {
 		echo "<p><b>Error:</b> Invalid username/password combination</p>";
 	} else {
@@ -47,12 +48,12 @@ if (isset($_POST['submit'])) {
 		// Authenticated, set session variables
 		$_SESSION['user_id'] = $res[0]['id'];
 		$_SESSION['username'] = $res[0]['username'];
-		
+
 		// update status to online
 		$timestamp = time();
 		$sql2 = "UPDATE Users2 SET status={$timestamp} WHERE id={$_SESSION['user_id']}";
         $db->execute_dml( $sql2 );
-		
+
 		redirect_to("profile.php?id={$_SESSION['user_id']}");
 
 	}
@@ -62,7 +63,7 @@ if (isset($_POST['submit'])) {
 if(isset($_GET['msg'])) {
 	echo "<p style='color:red;'>".$_GET['msg']."</p>";
 }
-?>	
+?>
 
 </body>
 </html>

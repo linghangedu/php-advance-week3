@@ -14,8 +14,8 @@ class Model
         $res = $db->execute_sql( $sql );
         $db->close_connect();
 
-//var_dump($res);
-// echo count($res);
+        //var_dump($res);
+        // echo count($res);
         $number_of_books = count( $res );
         //echo $number_of_books;
 
@@ -29,7 +29,7 @@ class Model
         foreach ($res as $row) {
             $book = new Book(
                 $row['title'], $row['author'], $row['description']
-            );
+                );
 
             array_push( $books_array, $book );
         }
@@ -41,22 +41,22 @@ class Model
     {
         // we use the previous function to get all the books and then we return the requested one.
         // in a real life scenario this will be done through a db select command
-        // $allBooks = $this->getBookList();
-$db  = new DBHelper();
-        $sql = "select * from Book where `title` = $title limit 1";
+        $db  = new DBHelper();
+        $sql = "select * from Book where `title` = '$title' limit 1";
+        // echo htmlspecialchars ( $sql );
         $res = $db->execute_sql( $sql );
         $db->close_connect();
 
         $book = new Book($res[0]['title'], $res[0]['author'], $res[0]['description']);
 
-                return $book;
+        return $book;
     }
 
     public function addBook( $book )
     {
         $db  = new DBHelper();
         $sql = "insert into Book VALUES (NULL, '$book->title',
-'$book->author', '$book->description')";
+        '$book->author', '$book->description')";
         //echo htmlspecialchars ( $sql );
         $res = $db->execute_sql( $sql );
         $db->close_connect();

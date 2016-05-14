@@ -1,16 +1,15 @@
 <?php
-//require_once( "functions.php" );
-require_once( "DBHelper.php" );
 session_start();
-//if (logged_in() == true) {
-//    redirect_to( "profile.php" );
-//}
+
+require_once( "functions.php" );
+require_once( "DBHelper.php" );
+if (logged_in() == true) {
+   redirect_to( "profile.php" );
+}
 ?>
 <html>
 <head>
     <title>User registration form</title>
-
-
 </head>
 <body>
 <h1>User registration form</h1>

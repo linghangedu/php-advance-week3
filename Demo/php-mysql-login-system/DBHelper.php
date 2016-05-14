@@ -6,41 +6,40 @@ class DBHelper
     public $conn;
     public $dbname = "test";
     public $username = "root";
-    public $password = "tingting";
+    public $password = "root";
     public $host = "localhost";
 
     public function __construct()
     {
 
-        $this->conn = mysql_connect($this->host, $this->username, $this->password);
+        $this->conn = mysqli_connect($this->host, $this->username, $this->password, $this->dbname);
         if (!$this->conn) {
-            die("connect fail" . mysql_error());
+            die("connect fail" . mysqli_error($this->conn));
         }
-        mysql_select_db($this->dbname, $this->conn);
     }
 
     public function execute_sql($sql)
     {
 
         $arr = array();
-        $res = mysql_query($sql, $this->conn) or die(mysql_error());
+        $res = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
 
-        while ($row = mysql_fetch_assoc($res)) {
+        while ($row = mysqli_fetch_assoc($res)) {
             $arr[] = $row;
         }
-        mysql_free_result($res);
+        mysqli_free_result($res);
         return $arr;
 
     }
 
-  public function execute_dml($sql)
+    public function execute_dml($sql)
     {
 
-        $b = mysql_query($sql, $this->conn) or die(mysql_error());
+        $b = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
         if (!$b) {
             return false; //fail
         } else {
-            if (mysql_affected_rows($this->conn) > 0) {
+            if (mysqli_affected_rows($this->conn) > 0) {
                 return 1; //ok
             } else {
                 return true; //none
@@ -48,13 +47,15 @@ class DBHelper
         }
 
     }
+
     public function close_connect()
     {
 
         if (!empty($this->conn)) {
-            mysql_close($this->conn);
+            mysqli_close($this->conn);
         }
     }
 }
 
 ?>
+

@@ -7,7 +7,7 @@
 <?php
 $q =  $_REQUEST["q"];
 
-$con = mysqli_connect('localhost','root','tingting', 'test');
+$con = mysqli_connect('localhost','root','root', 'test');
 
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));

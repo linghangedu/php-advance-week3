@@ -14,16 +14,15 @@ class DBHelper
 
         $this->conn = mysqli_connect($this->host, $this->username, $this->password, $this->dbname);
         if (!$this->conn) {
-            die("connect fail" . mysqli_connect_errorno());
+            die("connect fail" . mysqli_error($this->conn));
         }
-        // mysql_select_db($this->dbname, $this->conn);
     }
 
     public function execute_sql($sql)
     {
 
         $arr = array();
-        $res = mysqli_query($this->conn, $sql) or die(mysqli_connect_errorno());
+        $res = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
 
         while ($row = mysqli_fetch_assoc($res)) {
             $arr[] = $row;
